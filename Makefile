@@ -64,6 +64,15 @@ libbpfgo-dynamic-test: libbpfgo-test-bpf-dynamic
 
 # libbpf: static
 
+build-test: $(VMLINUXH) | $(LIBBPF_OBJ)
+	CC=$(CLANG) \
+		CGO_CFLAGS=$(CGO_CFLAGS_STATIC) \
+		CGO_LDFLAGS=$(CGO_LDFLAGS_STATIC) \
+		GOOS=linux GOARCH=$(ARCH) \
+		$(GO) build \
+		-tags netgo -ldflags $(CGO_EXTLDFLAGS_STATIC) \
+		-o ./bin/test ./cmd/test
+
 libbpfgo-static: $(VMLINUXH) | $(LIBBPF_OBJ)
 	CC=$(CLANG) \
 		CGO_CFLAGS=$(CGO_CFLAGS_STATIC) \
