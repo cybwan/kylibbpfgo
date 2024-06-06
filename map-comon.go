@@ -34,7 +34,7 @@ func GetMapInfoByFD(fd int) (*BPFMapInfo, error) {
 	defer C.cgo_bpf_map_info_free(infoC)
 
 	infoLenC := C.cgo_bpf_map_info_size()
-	retC := C.bpf_map_get_info_by_fd(C.int(fd), infoC, &infoLenC)
+	retC := C.bpf_obj_get_info_by_fd(C.int(fd), infoC, &infoLenC)
 	if retC < 0 {
 		return nil, fmt.Errorf("failed to get map info for fd %d: %w", fd, syscall.Errno(-retC))
 	}
