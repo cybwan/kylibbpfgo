@@ -78,23 +78,23 @@ func SetStrictMode(mode LibbpfStrictMode) {
 // Support
 //
 
-func BPFProgramTypeIsSupported(progType BPFProgType) (bool, error) {
-	supportedC := C.libbpf_probe_bpf_prog_type(C.enum_bpf_prog_type(int(progType)), nil)
-	if supportedC < 1 {
-		return false, syscall.Errno(-supportedC)
-	}
-
-	return supportedC == 1, nil
-}
-
-func BPFMapTypeIsSupported(mapType MapType) (bool, error) {
-	supportedC := C.libbpf_probe_bpf_map_type(C.enum_bpf_map_type(int(mapType)), nil)
-	if supportedC < 1 {
-		return false, syscall.Errno(-supportedC)
-	}
-
-	return supportedC == 1, nil
-}
+//func BPFProgramTypeIsSupported(progType BPFProgType) (bool, error) {
+//	supportedC := C.libbpf_probe_bpf_prog_type(C.enum_bpf_prog_type(int(progType)), nil)
+//	if supportedC < 1 {
+//		return false, syscall.Errno(-supportedC)
+//	}
+//
+//	return supportedC == 1, nil
+//}
+//
+//func BPFMapTypeIsSupported(mapType MapType) (bool, error) {
+//	supportedC := C.libbpf_probe_bpf_map_type(C.enum_bpf_map_type(int(mapType)), nil)
+//	if supportedC < 1 {
+//		return false, syscall.Errno(-supportedC)
+//	}
+//
+//	return supportedC == 1, nil
+//}
 
 //
 // Misc
