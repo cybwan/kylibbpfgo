@@ -22,6 +22,10 @@
 #include <bpf/libbpf.h>
 #include <linux/bpf.h> // uapi
 
+struct bpf_map_info *cgo_bpf_map_info_new();
+__u32 cgo_bpf_map_info_size();
+void cgo_bpf_map_info_free(struct bpf_map_info *info);
+
 int cgo_open_obj_pinned(const char *path, bool quiet);
 
 #endif
