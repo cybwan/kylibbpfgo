@@ -73,7 +73,7 @@ build-test: $(VMLINUXH) | $(LIBBPF_OBJ)
 		-tags netgo -ldflags $(CGO_EXTLDFLAGS_STATIC) \
 		-o ./bin/test ./cmd/test
 
-test:
+run-test:
 	./bin/test
 
 libbpfgo-static: $(VMLINUXH) | $(LIBBPF_OBJ)
