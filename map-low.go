@@ -64,3 +64,7 @@ func DeleteKey(fd int, key unsafe.Pointer) error {
 	}
 	return nil
 }
+
+func Memcpy(dst, src unsafe.Pointer, size uint32) {
+	C.memcpy(dst, src, size)
+}
