@@ -56,3 +56,22 @@ out_free:
 out_ret:
 	return fd;
 }
+
+struct bpf_map_batch_opts *cgo_bpf_map_batch_opts_new(__u64 elem_flags, __u64 flags)
+{
+    struct bpf_map_batch_opts *opts;
+    opts = calloc(1, sizeof(*opts));
+    if (!opts)
+        return NULL;
+
+    opts->sz = sizeof(*opts);
+    opts->elem_flags = elem_flags;
+    opts->flags = flags;
+
+    return opts;
+}
+
+void cgo_bpf_map_batch_opts_free(struct bpf_map_batch_opts *opts)
+{
+    free(opts);
+}

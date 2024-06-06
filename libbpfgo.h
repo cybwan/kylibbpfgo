@@ -24,4 +24,7 @@
 
 int cgo_open_obj_pinned(const char *path, bool quiet);
 
+struct bpf_map_batch_opts *cgo_bpf_map_batch_opts_new(__u64 elem_flags, __u64 flags);
+void cgo_bpf_map_batch_opts_free(struct bpf_map_batch_opts *opts);
+
 #endif
