@@ -18,4 +18,6 @@
 #include <bpf/libbpf.h>
 #include <linux/bpf.h> // uapi
 
+int cgo_open_obj_pinned(const char *path, bool quiet);
+
 #endif
