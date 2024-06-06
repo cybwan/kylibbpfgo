@@ -101,3 +101,8 @@ func CalcMapValueSize(valueSize int, mapType MapType) (int, error) {
 		return valueSize, nil
 	}
 }
+
+// roundUp rounds x up to the nearest multiple of y.
+func roundUp(x, y uint64) uint64 {
+	return ((x + (y - 1)) / y) * y
+}
