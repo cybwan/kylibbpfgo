@@ -1,6 +1,8 @@
 #ifndef __LIBBPF_GO_H__
 #define __LIBBPF_GO_H__
 
+#define BPF_FS_MAGIC 0xcafe4a11
+
 #ifdef __powerpc64__
     #define __SANE_USERSPACE_TYPES__ 1
 #endif
