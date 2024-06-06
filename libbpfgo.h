@@ -18,27 +18,10 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 
-#include <linux/limits.h>
-
 #include <bpf/bpf.h>
 #include <bpf/libbpf.h>
 #include <linux/bpf.h> // uapi
 
-#define BUILD_BUG_ON_ZERO(e) ((int)(sizeof(struct { int:(-!!(e)); })))
-#define __same_type(a, b) __builtin_types_compatible_p(typeof(a), typeof(b))
-#define __must_be_array(a) BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
-#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
-
-/* keep in sync with the definition in skeleton/pid_iter.bpf.c */
-enum bpf_obj_type {
-	BPF_OBJ_UNKNOWN,
-	BPF_OBJ_PROG,
-	BPF_OBJ_MAP,
-	BPF_OBJ_LINK,
-	BPF_OBJ_BTF,
-};
-
 int cgo_open_obj_pinned(const char *path, bool quiet);
 
-int cgo_open_obj_pinned_any(const char *path, enum bpf_obj_type exp_type);
 #endif
