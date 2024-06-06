@@ -248,7 +248,7 @@ func (m *BPFMap) Iterator() *BPFMapIterator {
 }
 
 func (m *BPFMap) Close() {
-	C.close(m.fd)
+	C.close(C.int(m.fd))
 }
 
 func Memcpy(dst, src unsafe.Pointer, size uint32) {
