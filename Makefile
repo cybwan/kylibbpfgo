@@ -1,7 +1,6 @@
 BASEDIR = $(abspath ./)
 
 OUTPUT = ./output
-SELFTEST = ./selftest
 
 CC = gcc
 CLANG = clang
@@ -119,7 +118,9 @@ $(LIBBPF_OBJ): $(LIBBPF_SRC) $(wildcard $(LIBBPF_SRC)/*.[ch]) | $(OUTPUT)/libbpf
 $(LIBBPF_SRC):
 ifeq ($(wildcard $@), )
 	echo "INFO: updating submodule 'libbpf'"
-	$(GIT) submodule update --init --recursive
+	wget https://github.com/libbpf/libbpf/archive/refs/tags/v0.8.3.tar.gz
+	tar zxf v0.8.3.tar.gz
+	mv libbpf-0.8.3 libbpf
 endif
 
 # output
