@@ -11,6 +11,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <sys/resource.h>
+#include <sys/stat.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 
