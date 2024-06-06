@@ -45,6 +45,8 @@ func main() {
 	}
 	kylibbpfgo.Memcpy(unsafe.Pointer(&natActs), unsafe.Pointer(&bytes[0]), 1024)
 	fmt.Println(natActs.Ca.ActType)
+
+	nat_map.Close()
 }
 
 type DpNatKey struct {

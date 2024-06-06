@@ -17,15 +17,15 @@ const (
 	MapFlagUpdateAny MapFlag = iota // create new element or update existing
 )
 
-// BPFMapLow provides a low-level interface to BPF maps.
+// BPFMap provides a low-level interface to BPF maps.
 // Its methods follow the BPFMap naming convention.
-type BPFMapLow struct {
+type BPFMap struct {
 	fd   int
 	info *BPFMapInfo
 }
 
-// GetMapByPinnedPath returns a BPFMapLow instance for the map with the given pinned path.
-func GetMapByPinnedPath(pinnedPath string) (*BPFMapLow, error) {
+// GetMapByPinnedPath returns a BPFMap instance for the map with the given pinned path.
+func GetMapByPinnedPath(pinnedPath string) (*BPFMap, error) {
 	fd, err := OpenObjPinned(pinnedPath)
 	if err != nil {
 		return nil, err
@@ -36,17 +36,17 @@ func GetMapByPinnedPath(pinnedPath string) (*BPFMapLow, error) {
 		return nil, err
 	}
 
-	return &BPFMapLow{
+	return &BPFMap{
 		fd:   fd,
 		info: info,
 	}, nil
 }
 
-func (m *BPFMapLow) FileDescriptor() int {
+func (m *BPFMap) FileDescriptor() int {
 	return m.fd
 }
 
-func (m *BPFMapLow) ReuseFD(fd int) error {
+func (m *BPFMap) ReuseFD(fd int) error {
 	info, err := GetMapInfoByFD(fd)
 	if err != nil {
 		return fmt.Errorf("failed to reuse fd %d: %w", fd, err)
@@ -75,35 +75,35 @@ func (m *BPFMapLow) ReuseFD(fd int) error {
 	return nil
 }
 
-func (m *BPFMapLow) Name() string {
+func (m *BPFMap) Name() string {
 	return m.info.Name
 }
 
-func (m *BPFMapLow) Type() MapType {
+func (m *BPFMap) Type() MapType {
 	return MapType(m.info.Type)
 }
 
-func (m *BPFMapLow) MaxEntries() uint32 {
+func (m *BPFMap) MaxEntries() uint32 {
 	return m.info.MaxEntries
 }
 
-func (m *BPFMapLow) KeySize() int {
+func (m *BPFMap) KeySize() int {
 	return int(m.info.KeySize)
 }
 
-func (m *BPFMapLow) ValueSize() int {
+func (m *BPFMap) ValueSize() int {
 	return int(m.info.ValueSize)
 }
 
 //
-// BPFMapLow Operations
+// BPFMap Operations
 //
 
-func (m *BPFMapLow) GetValue(key unsafe.Pointer) ([]byte, error) {
+func (m *BPFMap) GetValue(key unsafe.Pointer) ([]byte, error) {
 	return m.GetValueFlags(key, MapFlagUpdateAny)
 }
 
-func (m *BPFMapLow) GetValueFlags(key unsafe.Pointer, flags MapFlag) ([]byte, error) {
+func (m *BPFMap) GetValueFlags(key unsafe.Pointer, flags MapFlag) ([]byte, error) {
 	valueSize, err := CalcMapValueSize(m.ValueSize(), m.Type())
 	if err != nil {
 		return nil, fmt.Errorf("map %s %w", m.Name(), err)
@@ -123,7 +123,7 @@ func (m *BPFMapLow) GetValueFlags(key unsafe.Pointer, flags MapFlag) ([]byte, er
 	return value, nil
 }
 
-func (m *BPFMapLow) LookupAndDeleteElem(
+func (m *BPFMap) LookupAndDeleteElem(
 	key unsafe.Pointer,
 	value unsafe.Pointer,
 ) error {
@@ -139,7 +139,7 @@ func (m *BPFMapLow) LookupAndDeleteElem(
 	return nil
 }
 
-func (m *BPFMapLow) LookupAndDeleteElemFlags(
+func (m *BPFMap) LookupAndDeleteElemFlags(
 	key unsafe.Pointer,
 	value unsafe.Pointer,
 	flags MapFlag,
@@ -157,7 +157,7 @@ func (m *BPFMapLow) LookupAndDeleteElemFlags(
 	return nil
 }
 
-func (m *BPFMapLow) GetValueAndDeleteKey(key unsafe.Pointer) ([]byte, error) {
+func (m *BPFMap) GetValueAndDeleteKey(key unsafe.Pointer) ([]byte, error) {
 	valueSize, err := CalcMapValueSize(m.ValueSize(), m.Type())
 	if err != nil {
 		return nil, fmt.Errorf("map %s %w", m.Name(), err)
@@ -175,7 +175,7 @@ func (m *BPFMapLow) GetValueAndDeleteKey(key unsafe.Pointer) ([]byte, error) {
 	return value, nil
 }
 
-func (m *BPFMapLow) GetValueAndDeleteKeyFlags(key unsafe.Pointer, flags MapFlag) ([]byte, error) {
+func (m *BPFMap) GetValueAndDeleteKeyFlags(key unsafe.Pointer, flags MapFlag) ([]byte, error) {
 	valueSize, err := CalcMapValueSize(m.ValueSize(), m.Type())
 	if err != nil {
 		return nil, fmt.Errorf("map %s %w", m.Name(), err)
@@ -194,11 +194,11 @@ func (m *BPFMapLow) GetValueAndDeleteKeyFlags(key unsafe.Pointer, flags MapFlag)
 	return value, nil
 }
 
-func (m *BPFMapLow) Update(key, value unsafe.Pointer) error {
+func (m *BPFMap) Update(key, value unsafe.Pointer) error {
 	return m.UpdateValueFlags(key, value, MapFlagUpdateAny)
 }
 
-func (m *BPFMapLow) UpdateValueFlags(key, value unsafe.Pointer, flags MapFlag) error {
+func (m *BPFMap) UpdateValueFlags(key, value unsafe.Pointer, flags MapFlag) error {
 	retC := C.bpf_map_update_elem(
 		C.int(m.FileDescriptor()),
 		key,
@@ -212,7 +212,7 @@ func (m *BPFMapLow) UpdateValueFlags(key, value unsafe.Pointer, flags MapFlag) e
 	return nil
 }
 
-func (m *BPFMapLow) DeleteKey(key unsafe.Pointer) error {
+func (m *BPFMap) DeleteKey(key unsafe.Pointer) error {
 	retC := C.bpf_map_delete_elem(C.int(m.FileDescriptor()), key)
 	if retC < 0 {
 		return fmt.Errorf("failed to delete key %d in map %s: %w", key, m.Name(), syscall.Errno(-retC))
@@ -221,7 +221,7 @@ func (m *BPFMapLow) DeleteKey(key unsafe.Pointer) error {
 	return nil
 }
 
-func (m *BPFMapLow) GetNextKey(key unsafe.Pointer, nextKey unsafe.Pointer) error {
+func (m *BPFMap) GetNextKey(key unsafe.Pointer, nextKey unsafe.Pointer) error {
 	retC := C.bpf_map_get_next_key(
 		C.int(m.FileDescriptor()),
 		key,
@@ -235,16 +235,20 @@ func (m *BPFMapLow) GetNextKey(key unsafe.Pointer, nextKey unsafe.Pointer) error
 }
 
 //
-// BPFMapLow Iterator
+// BPFMap Iterator
 //
 
-func (m *BPFMapLow) Iterator() *BPFMapIterator {
+func (m *BPFMap) Iterator() *BPFMapIterator {
 	return &BPFMapIterator{
 		mapFD:   m.FileDescriptor(),
 		keySize: m.KeySize(),
 		prev:    nil,
 		next:    nil,
 	}
+}
+
+func (m *BPFMap) Close() {
+	C.close(m.fd)
 }
 
 func Memcpy(dst, src unsafe.Pointer, size uint32) {
