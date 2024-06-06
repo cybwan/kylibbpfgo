@@ -14,6 +14,7 @@
 #include <stdarg.h>
 #include <libgen.h>
 #include <sys/resource.h>
+#include <sys/statfs.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 
