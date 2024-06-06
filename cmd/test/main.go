@@ -1,5 +1,6 @@
 package main
 
+import "C"
 import (
 	"fmt"
 	"unsafe"
@@ -37,6 +38,13 @@ func main() {
 	if err := kylibbpfgo.Update(nat_map_fd, unsafe.Pointer(&natKey), unsafe.Pointer(&natActs)); err != nil {
 		fmt.Println(err.Error())
 	}
+
+	bytes, err := kylibbpfgo.GetValue(nat_map_fd, unsafe.Pointer(&natKey), 1024)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	C.memcpy(unsafe.Pointer(&natActs), unsafe.Pointer(&bytes[0]), 1024)
+	fmt.Println(natActs.Ca.ActType)
 }
 
 type DpNatKey struct {
