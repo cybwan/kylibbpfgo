@@ -8,7 +8,9 @@ import "C"
 
 import (
 	"fmt"
+	"path/filepath"
 	"syscall"
+	"unsafe"
 )
 
 //
@@ -107,4 +109,17 @@ func NumPossibleCPUs() (int, error) {
 	}
 
 	return int(nCPUsC), nil
+}
+
+func OpenObjPinned(path string) (int, error) {
+	absPath, err := filepath.Abs(path)
+	if err != nil {
+		return -1, fmt.Errorf("invalid path: %s: %v", path, err)
+	}
+
+	absPathC := C.CString(absPath)
+	defer C.free(unsafe.Pointer(absPathC))
+	var quiet C.Bool
+	fd := C.cgo_open_obj_pinned(absPathC, quiet)
+	return int(fd), nil
 }
