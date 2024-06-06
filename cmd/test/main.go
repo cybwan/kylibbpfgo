@@ -2,7 +2,6 @@ package main
 
 import "C"
 import (
-	"encoding/json"
 	"fmt"
 	"unsafe"
 
@@ -19,11 +18,11 @@ func main() {
 	egress_fd, _ := kylibbpfgo.OpenObjPinned("/sys/fs/bpf/gateway/xdp_egress")
 	fmt.Println("ingress_fd:", egress_fd)
 
-	nat_map_fd, _ := kylibbpfgo.OpenObjPinned("/sys/fs/bpf/f4gw_nat")
-	fmt.Println("nat_map_fd:", nat_map_fd)
+	nat_map, _ := kylibbpfgo.GetMapByPinnedPath("/sys/fs/bpf/f4gw_nat")
+	fmt.Println("nat_map_fd:", nat_map)
 
 	k := uint32(2)
-	if err := kylibbpfgo.Update(test_fd, unsafe.Pointer(&k), unsafe.Pointer(&egress_fd)); err != nil {
+	if err := nat_map.Update(unsafe.Pointer(&k), unsafe.Pointer(&egress_fd)); err != nil {
 		fmt.Println(err.Error())
 	}
 
@@ -36,21 +35,16 @@ func main() {
 	natActs.Ca.ActType = 99
 	natActs.Ito = 88888
 
-	if err := kylibbpfgo.Update(nat_map_fd, unsafe.Pointer(&natKey), unsafe.Pointer(&natActs)); err != nil {
+	if err := nat_map.Update(unsafe.Pointer(&natKey), unsafe.Pointer(&natActs)); err != nil {
 		fmt.Println(err.Error())
 	}
 
-	bytes, err := kylibbpfgo.GetValue(nat_map_fd, unsafe.Pointer(&natKey), 1024)
+	bytes, err := nat_map.GetValue(unsafe.Pointer(&natKey))
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 	kylibbpfgo.Memcpy(unsafe.Pointer(&natActs), unsafe.Pointer(&bytes[0]), 1024)
 	fmt.Println(natActs.Ca.ActType)
-
-	if info, err := kylibbpfgo.GetMapInfoByFD(nat_map_fd); err == nil {
-		bytes, _ := json.MarshalIndent(info, "", "")
-		fmt.Println(string(bytes))
-	}
 }
 
 type DpNatKey struct {

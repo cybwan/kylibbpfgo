@@ -46,6 +46,7 @@ const (
 type BPFMapInfo struct {
 	FD         int
 	ID         uint32
+	Type       MapType
 	KeySize    uint32
 	ValueSize  uint32
 	MaxEntries uint32
@@ -67,6 +68,7 @@ func GetMapInfoByFD(fd int) (*BPFMapInfo, error) {
 	return &BPFMapInfo{
 		FD:         fd,
 		ID:         uint32(C.cgo_bpf_map_info_id(infoC)),
+		Type:       MapType(C.cgo_bpf_map_info_type(infoC)),
 		KeySize:    uint32(C.cgo_bpf_map_info_key_size(infoC)),
 		ValueSize:  uint32(C.cgo_bpf_map_info_value_size(infoC)),
 		MaxEntries: uint32(C.cgo_bpf_map_info_max_entries(infoC)),
