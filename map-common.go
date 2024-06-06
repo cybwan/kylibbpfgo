@@ -44,11 +44,6 @@ const (
 	MapTypeStack               MapType = C.BPF_MAP_TYPE_STACK
 	MapTypeSKStorage           MapType = C.BPF_MAP_TYPE_SK_STORAGE
 	MapTypeDevmapHash          MapType = C.BPF_MAP_TYPE_DEVMAP_HASH
-	MapTypeStructOps           MapType = C.BPF_MAP_TYPE_STRUCT_OPS
-	MapTypeRingbuf             MapType = C.BPF_MAP_TYPE_RINGBUF
-	MapTypeInodeStorage        MapType = C.BPF_MAP_TYPE_INODE_STORAGE
-	MapTypeTaskStorage         MapType = C.BPF_MAP_TYPE_TASK_STORAGE
-	MapTypeBloomFilter         MapType = C.BPF_MAP_TYPE_BLOOM_FILTER
 )
 
 var mapTypeToString = map[MapType]string{
@@ -78,11 +73,6 @@ var mapTypeToString = map[MapType]string{
 	MapTypeStack:               "BPF_MAP_TYPE_STACK",
 	MapTypeSKStorage:           "BPF_MAP_TYPE_SK_STORAGE",
 	MapTypeDevmapHash:          "BPF_MAP_TYPE_DEVMAP_HASH",
-	MapTypeStructOps:           "BPF_MAP_TYPE_STRUCT_OPS",
-	MapTypeRingbuf:             "BPF_MAP_TYPE_RINGBUF",
-	MapTypeInodeStorage:        "BPF_MAP_TYPE_INODE_STORAGE",
-	MapTypeTaskStorage:         "BPF_MAP_TYPE_TASK_STORAGE",
-	MapTypeBloomFilter:         "BPF_MAP_TYPE_BLOOM_FILTER",
 }
 
 func (t MapType) String() string {
