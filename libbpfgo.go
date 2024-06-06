@@ -119,7 +119,7 @@ func OpenObjPinned(path string) (int, error) {
 
 	absPathC := C.CString(absPath)
 	defer C.free(unsafe.Pointer(absPathC))
-	var quiet bool
+	var quiet C.bool
 	fd := C.cgo_open_obj_pinned(absPathC, quiet)
 	return int(fd), nil
 }
