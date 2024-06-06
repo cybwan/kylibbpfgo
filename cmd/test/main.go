@@ -2,6 +2,7 @@ package main
 
 import "C"
 import (
+	"encoding/json"
 	"fmt"
 	"unsafe"
 
@@ -45,6 +46,11 @@ func main() {
 	}
 	kylibbpfgo.Memcpy(unsafe.Pointer(&natActs), unsafe.Pointer(&bytes[0]), 1024)
 	fmt.Println(natActs.Ca.ActType)
+
+	if info, err := kylibbpfgo.GetMapInfoByFD(nat_map_fd); err == nil {
+		bytes, _ := json.MarshalIndent(info, "", "")
+		fmt.Println(string(bytes))
+	}
 }
 
 type DpNatKey struct {
