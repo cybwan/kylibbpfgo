@@ -14,10 +14,7 @@ import (
 type MapFlag uint32
 
 const (
-	MapFlagUpdateAny     MapFlag = iota // create new element or update existing
-	MapFlagUpdateNoExist                // create new element if it didn't exist
-	MapFlagUpdateExist                  // update existing element
-	MapFlagFLock                        // spin_lock-ed map_lookup/map_update
+	MapFlagUpdateAny MapFlag = iota // create new element or update existing
 )
 
 func GetValue(fd int, key unsafe.Pointer, valueSize uint32) ([]byte, error) {
@@ -67,8 +64,4 @@ func DeleteKey(fd int, key unsafe.Pointer) error {
 
 func Memcpy(dst, src unsafe.Pointer, size uint32) {
 	C.memcpy(dst, src, C.ulong(size))
-}
-
-func Sizeof(ptr unsafe.Pointer) uint32 {
-	return uint32(C.sizeof(*ptr))
 }
