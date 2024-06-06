@@ -24,6 +24,8 @@
 #include <bpf/libbpf.h>
 #include <linux/bpf.h> // uapi
 
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
+
 /* keep in sync with the definition in skeleton/pid_iter.bpf.c */
 enum bpf_obj_type {
 	BPF_OBJ_UNKNOWN,
