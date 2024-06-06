@@ -20,9 +20,24 @@ const (
 	MapFlagFLock                        // spin_lock-ed map_lookup/map_update
 )
 
-//
-// bpf map (low-level API)
-//
+func GetValue(fd int, key unsafe.Pointer, valueSize uint32) ([]byte, error) {
+	return GetValueFlags(fd, key, valueSize, MapFlagUpdateAny)
+}
+
+func GetValueFlags(fd int, key unsafe.Pointer, valueSize uint32, flags MapFlag) ([]byte, error) {
+	value := make([]byte, valueSize)
+	retC := C.bpf_map_lookup_elem_flags(
+		C.int(fd),
+		key,
+		unsafe.Pointer(&value[0]),
+		C.ulonglong(flags),
+	)
+	if retC < 0 {
+		return nil, fmt.Errorf("failed to lookup value %v in map %d: %w", key, fd, syscall.Errno(-retC))
+	}
+
+	return value, nil
+}
 
 func Update(fd int, key, value unsafe.Pointer) error {
 	return UpdateValueFlags(fd, key, value, MapFlagUpdateAny)
