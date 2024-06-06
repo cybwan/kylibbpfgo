@@ -41,11 +41,6 @@ const (
 	BPFProgTypeRawTracepointWritable BPFProgType = C.BPF_PROG_TYPE_RAW_TRACEPOINT_WRITABLE
 	BPFProgTypeCgroupSockopt         BPFProgType = C.BPF_PROG_TYPE_CGROUP_SOCKOPT
 	BPFProgTypeTracing               BPFProgType = C.BPF_PROG_TYPE_TRACING
-	BPFProgTypeStructOps             BPFProgType = C.BPF_PROG_TYPE_STRUCT_OPS
-	BPFProgTypeExt                   BPFProgType = C.BPF_PROG_TYPE_EXT
-	BPFProgTypeLsm                   BPFProgType = C.BPF_PROG_TYPE_LSM
-	BPFProgTypeSkLookup              BPFProgType = C.BPF_PROG_TYPE_SK_LOOKUP
-	BPFProgTypeSyscall               BPFProgType = C.BPF_PROG_TYPE_SYSCALL
 )
 
 // Deprecated: Convert type directly instead.
@@ -79,11 +74,6 @@ var bpfProgTypeToString = map[BPFProgType]string{
 	BPFProgTypeRawTracepointWritable: "BPF_PROG_TYPE_RAW_TRACEPOINT_WRITABLE",
 	BPFProgTypeCgroupSockopt:         "BPF_PROG_TYPE_CGROUP_SOCKOPT",
 	BPFProgTypeTracing:               "BPF_PROG_TYPE_TRACING",
-	BPFProgTypeStructOps:             "BPF_PROG_TYPE_STRUCT_OPS",
-	BPFProgTypeExt:                   "BPF_PROG_TYPE_EXT",
-	BPFProgTypeLsm:                   "BPF_PROG_TYPE_LSM",
-	BPFProgTypeSkLookup:              "BPF_PROG_TYPE_SK_LOOKUP",
-	BPFProgTypeSyscall:               "BPF_PROG_TYPE_SYSCALL",
 }
 
 func (t BPFProgType) String() string {
@@ -94,10 +84,6 @@ func (t BPFProgType) String() string {
 	}
 
 	return str
-}
-
-func (t BPFProgType) Name() string {
-	return C.GoString(C.libbpf_bpf_prog_type_str(C.enum_bpf_prog_type(t)))
 }
 
 //
@@ -136,12 +122,6 @@ const (
 	BPFAttachTypeModifyReturn         BPFAttachType = C.BPF_MODIFY_RETURN
 	BPFAttachTypeLSMMac               BPFAttachType = C.BPF_LSM_MAC
 	BPFAttachTypeTraceIter            BPFAttachType = C.BPF_TRACE_ITER
-	BPFAttachTypeXDPDevMap            BPFAttachType = C.BPF_XDP_DEVMAP
-	BPFAttachTypeXDPCPUMap            BPFAttachType = C.BPF_XDP_CPUMAP
-	BPFAttachTypeSKLookup             BPFAttachType = C.BPF_SK_LOOKUP
-	BPFAttachTypeXDP                  BPFAttachType = C.BPF_XDP
-	BPFAttachTypeSKSKBVerdict         BPFAttachType = C.BPF_SK_SKB_VERDICT
-	BPFAttachTypeSKReusePortSelect    BPFAttachType = C.BPF_SK_REUSEPORT_SELECT
 	BPFAttachTypePerfEvent            BPFAttachType = C.BPF_PERF_EVENT
 	BPFAttachTypeTraceKprobeMulti     BPFAttachType = C.BPF_TRACE_KPROBE_MULTI
 )
@@ -176,8 +156,6 @@ var bpfAttachTypeToString = map[BPFAttachType]string{
 	BPFAttachTypeModifyReturn:         "BPF_MODIFY_RETURN",
 	BPFAttachTypeLSMMac:               "BPF_LSM_MAC",
 	BPFAttachTypeTraceIter:            "BPF_TRACE_ITER",
-	BPFAttachTypeSKSKBVerdict:         "BPF_SK_SKB_VERDICT",
-	BPFAttachTypeSKReusePortSelect:    "BPF_SK_REUSEPORT_SELECT",
 	BPFAttachTypePerfEvent:            "BPF_PERF_EVENT",
 	BPFAttachTypeTraceKprobeMulti:     "BPF_TRACE_KPROBE_MULTI",
 }
