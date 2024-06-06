@@ -40,11 +40,6 @@ const (
 	MapTypeStack               MapType = C.BPF_MAP_TYPE_STACK
 	MapTypeSKStorage           MapType = C.BPF_MAP_TYPE_SK_STORAGE
 	MapTypeDevmapHash          MapType = C.BPF_MAP_TYPE_DEVMAP_HASH
-	MapTypeStructOps           MapType = C.BPF_MAP_TYPE_STRUCT_OPS
-	MapTypeRingbuf             MapType = C.BPF_MAP_TYPE_RINGBUF
-	MapTypeInodeStorage        MapType = C.BPF_MAP_TYPE_INODE_STORAGE
-	MapTypeTaskStorage         MapType = C.BPF_MAP_TYPE_TASK_STORAGE
-	MapTypeBloomFilter         MapType = C.BPF_MAP_TYPE_BLOOM_FILTER
 )
 
 // BPFMapInfo mirrors the C structure bpf_map_info.
