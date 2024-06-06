@@ -24,6 +24,7 @@
 #include <bpf/libbpf.h>
 #include <linux/bpf.h> // uapi
 
+#define __must_be_array(a) BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
 
 /* keep in sync with the definition in skeleton/pid_iter.bpf.c */
