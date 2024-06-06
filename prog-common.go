@@ -119,11 +119,6 @@ const (
 	BPFAttachTypeTraceRawTP           BPFAttachType = C.BPF_TRACE_RAW_TP
 	BPFAttachTypeTraceFentry          BPFAttachType = C.BPF_TRACE_FENTRY
 	BPFAttachTypeTraceFexit           BPFAttachType = C.BPF_TRACE_FEXIT
-	BPFAttachTypeModifyReturn         BPFAttachType = C.BPF_MODIFY_RETURN
-	BPFAttachTypeLSMMac               BPFAttachType = C.BPF_LSM_MAC
-	BPFAttachTypeTraceIter            BPFAttachType = C.BPF_TRACE_ITER
-	BPFAttachTypePerfEvent            BPFAttachType = C.BPF_PERF_EVENT
-	BPFAttachTypeTraceKprobeMulti     BPFAttachType = C.BPF_TRACE_KPROBE_MULTI
 )
 
 var bpfAttachTypeToString = map[BPFAttachType]string{
@@ -153,11 +148,6 @@ var bpfAttachTypeToString = map[BPFAttachType]string{
 	BPFAttachTypeTraceRawTP:           "BPF_TRACE_RAW_TP",
 	BPFAttachTypeTraceFentry:          "BPF_TRACE_FENTRY",
 	BPFAttachTypeTraceFexit:           "BPF_TRACE_FEXIT",
-	BPFAttachTypeModifyReturn:         "BPF_MODIFY_RETURN",
-	BPFAttachTypeLSMMac:               "BPF_LSM_MAC",
-	BPFAttachTypeTraceIter:            "BPF_TRACE_ITER",
-	BPFAttachTypePerfEvent:            "BPF_PERF_EVENT",
-	BPFAttachTypeTraceKprobeMulti:     "BPF_TRACE_KPROBE_MULTI",
 }
 
 func (t BPFAttachType) String() string {
