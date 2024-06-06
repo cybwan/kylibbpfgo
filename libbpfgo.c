@@ -10,6 +10,25 @@ void p_err(const char *fmt, ...)
 	va_end(ap);
 }
 
+void p_info(const char *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
+	vfprintf(stderr, fmt, ap);
+	fprintf(stderr, "\n");
+	va_end(ap);
+}
+
+static bool is_bpffs(char *path)
+{
+	struct statfs st_fs;
+
+	if (statfs(path, &st_fs) < 0)
+		return false;
+
+	return (unsigned long)st_fs.f_type == BPF_FS_MAGIC;
+}
+
 int cgo_open_obj_pinned(const char *path, bool quiet)
 {
 	char *pname;
