@@ -31,6 +31,7 @@ func main() {
 	natKey.V6 = 0
 
 	natActs := DpNatTacts{}
+	natActs.Ito = 88888
 
 	if err := kylibbpfgo.Update(nat_map_fd, unsafe.Pointer(&natKey), unsafe.Pointer(&natActs)); err != nil {
 		fmt.Println(err.Error())
