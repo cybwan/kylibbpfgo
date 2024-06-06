@@ -37,13 +37,5 @@ __u32 cgo_bpf_map_info_value_size(struct bpf_map_info *info);
 __u32 cgo_bpf_map_info_max_entries(struct bpf_map_info *info);
 __u32 cgo_bpf_map_info_map_flags(struct bpf_map_info *info);
 char *cgo_bpf_map_info_name(struct bpf_map_info *info);
-__u64 cgo_bpf_map_info_map_extra(struct bpf_map_info *info);
-__u32 cgo_bpf_map_info_ifindex(struct bpf_map_info *info);
-__u32 cgo_bpf_map_info_btf_vmlinux_value_type_id(struct bpf_map_info *info);
-__u64 cgo_bpf_map_info_netns_dev(struct bpf_map_info *info);
-__u64 cgo_bpf_map_info_netns_ino(struct bpf_map_info *info);
-__u32 cgo_bpf_map_info_btf_id(struct bpf_map_info *info);
-__u32 cgo_bpf_map_info_btf_key_type_id(struct bpf_map_info *info);
-__u32 cgo_bpf_map_info_btf_value_type_id(struct bpf_map_info *info);
 
 #endif

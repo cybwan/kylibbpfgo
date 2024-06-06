@@ -49,6 +49,62 @@ void cgo_bpf_map_info_free(struct bpf_map_info *info)
     free(info);
 }
 
+__u32 cgo_bpf_map_info_type(struct bpf_map_info *info)
+{
+    if (!info)
+        return 0;
+
+    return info->type;
+}
+
+__u32 cgo_bpf_map_info_id(struct bpf_map_info *info)
+{
+    if (!info)
+        return 0;
+
+    return info->id;
+}
+
+__u32 cgo_bpf_map_info_key_size(struct bpf_map_info *info)
+{
+    if (!info)
+        return 0;
+
+    return info->key_size;
+}
+
+__u32 cgo_bpf_map_info_value_size(struct bpf_map_info *info)
+{
+    if (!info)
+        return 0;
+
+    return info->value_size;
+}
+
+__u32 cgo_bpf_map_info_max_entries(struct bpf_map_info *info)
+{
+    if (!info)
+        return 0;
+
+    return info->max_entries;
+}
+
+__u32 cgo_bpf_map_info_map_flags(struct bpf_map_info *info)
+{
+    if (!info)
+        return 0;
+
+    return info->map_flags;
+}
+
+char *cgo_bpf_map_info_name(struct bpf_map_info *info)
+{
+    if (!info)
+        return NULL;
+
+    return info->name;
+}
+
 int cgo_open_obj_pinned(const char *path, bool quiet)
 {
 	char *pname;
