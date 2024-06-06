@@ -13,6 +13,7 @@ import (
 
 // BPFMapInfo mirrors the C structure bpf_map_info.
 type BPFMapInfo struct {
+	FD         int
 	ID         uint32
 	KeySize    uint32
 	ValueSize  uint32
@@ -33,6 +34,7 @@ func GetMapInfoByFD(fd int) (*BPFMapInfo, error) {
 	}
 
 	return &BPFMapInfo{
+		FD:         fd,
 		ID:         uint32(C.cgo_bpf_map_info_id(infoC)),
 		KeySize:    uint32(C.cgo_bpf_map_info_key_size(infoC)),
 		ValueSize:  uint32(C.cgo_bpf_map_info_value_size(infoC)),
