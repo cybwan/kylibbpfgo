@@ -24,4 +24,19 @@
 
 int cgo_open_obj_pinned(const char *path, bool quiet);
 
+//
+// struct getters
+//
+
+// bpf_map_info
+
+__u32 cgo_bpf_map_info_type(struct bpf_map_info *info);
+__u32 cgo_bpf_map_info_id(struct bpf_map_info *info);
+__u32 cgo_bpf_map_info_key_size(struct bpf_map_info *info);
+__u32 cgo_bpf_map_info_value_size(struct bpf_map_info *info);
+__u32 cgo_bpf_map_info_max_entries(struct bpf_map_info *info);
+__u32 cgo_bpf_map_info_map_flags(struct bpf_map_info *info);
+char *cgo_bpf_map_info_name(struct bpf_map_info *info);
+__u64 cgo_bpf_map_info_map_extra(struct bpf_map_info *info);
+
 #endif
