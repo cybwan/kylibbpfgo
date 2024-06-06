@@ -66,5 +66,5 @@ func DeleteKey(fd int, key unsafe.Pointer) error {
 }
 
 func Memcpy(dst, src unsafe.Pointer, size uint32) {
-	C.memcpy(dst, src, size)
+	C.memcpy(dst, src, C.long(size))
 }
